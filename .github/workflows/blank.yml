@@ -46,6 +46,7 @@ jobs:
           echo Add other actions to build,
           echo test, and deploy your project.
 
+      # 在没有指定版本的情况下，Github 使用的 Node.js 是18.19.1版本（2024年3月21日15:13:22）
       - name: Print Node.js Version
         run: |
           echo Node.js Version is:
