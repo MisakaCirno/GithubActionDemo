@@ -1,0 +1,77 @@
+# Optional - The name of the workflow as it will appear in the "Actions" tab of the GitHub repository.
+# If this field is omitted, the name of the workflow file will be used instead.
+# - - - - -
+# 可选 - Workflow 的名称，它将出现在 GitHub 存储库的“Actions”选项卡中。
+# 如果省略此字段，将使用 Workflow 文件的名称。
+name: learn-github-actions
+
+# Optional - The name for workflow runs generated from the workflow, which will appear in the list of workflow runs on your repository's "Actions" tab.
+# This example uses an expression with the `github` context to display the username of the actor that triggered the workflow run.
+# For more information, see "[AUTOTITLE](/actions/using-workflows/workflow-syntax-for-github-actions#run-name)."
+# - - - - -
+# 可选 - 从 Workflow 生成的 Workflow 运行的名称，它将出现在存储库的“Actions”选项卡上的 Workflow 运行列表中。
+# 此示例使用 `github` 上下文的表达式来显示触发 Workflow 运行的操作者的用户名。
+# 有关详细信息，请参见“[AUTOTITLE](/actions/using-workflows/workflow-syntax-for-github-actions#run-name)”。
+run-name: ${{ github.actor }} is learning GitHub Actions
+
+# Specifies the trigger for this workflow. This example uses the `push` event, so a workflow run is triggered every time someone pushes a change to the repository or merges a pull request.
+# This is triggered by a push to every branch; for examples of syntax that runs only on pushes to specific branches, paths, or tags, see "[AUTOTITLE](/actions/reference/workflow-syntax-for-github-actions#onpushpull_requestpull_request_targetpathspaths-ignore)."
+# - - - - -
+# 指定此工作流的触发器。此示例使用 `push` 事件，因此每次有人对存储库进行更改或合并拉取请求时都会触发工作流运行。
+# 这是由对每个分支的推送触发的；有关仅在对特定分支、路径或标签进行推送时运行的语法示例，请参见“[AUTOTITLE](/actions/reference/workflow-syntax-for-github-actions#onpushpull_requestpull_request_targetpathspaths-ignore)”。
+on: [push]
+
+# Groups together all the jobs that run in the `learn-github-actions` workflow.
+# - - - - -
+# 将在 `learn-github-actions` Workflow 中运行的所有作业分组在一起。
+jobs:
+
+# Defines a job named `check-bats-version`. The child keys will define properties of the job.
+# 定义名为 `check-bats-version` 的 Job 。子键将定义 Job 的属性。
+  check-bats-version:
+
+# Configures the job to run on the latest version of an Ubuntu Linux runner.
+# This means that the job will execute on a fresh virtual machine hosted by GitHub.
+# For syntax examples using other runners, see "[AUTOTITLE](/actions/reference/workflow-syntax-for-github-actions#jobsjob_idruns-on)"
+# - - - - -
+# 配置 Job 在最新版本的 Ubuntu Linux Runner 上运行。
+# 这意味着 Job 将在 GitHub 托管的新虚拟机上执行。
+# 有关使用其他 Runner 的语法示例，请参见“[AUTOTITLE](/actions/reference/workflow-syntax-for-github-actions#jobsjob_idruns-on)”
+    runs-on: ubuntu-latest
+
+# Groups together all the steps that run in the `check-bats-version` job.
+# Each item nested under this section is a separate action or shell script.
+# - - - - -
+# 将在 `check-bats-version` Job 中运行的所有 Step 分组在一起。
+# 此部分下嵌套的每个项目都是一个单独的 action 或 shell 脚本。
+    steps:
+
+# The `uses` keyword specifies that this step will run `v4` of the `actions/checkout` action.
+# This is an action that checks out your repository onto the runner, allowing you to run scripts or other actions against your code (such as build and test tools).
+# You should use the checkout action any time your workflow will use the repository's code.
+# - - - - -
+# `uses` 关键字指定此 Step 将运行 `actions/checkout` 操作的 `v4` 版本。
+# 这是一个操作，它将你的存储库检出到 runner 上，允许你对你的代码运行脚本或其他操作（例如构建和测试工具）。
+# 你应该在 Workflow 将使用存储库的代码时使用 checkout 操作。
+      - uses: actions/checkout@v4
+
+# This step uses the `actions/setup-node@v4` action to install the specified version of the Node.js. (This example uses version 14.)
+# This puts both the `node` and `npm` commands in your `PATH`.
+# - - - - -
+# 此 Step 使用 `actions/setup-node@v4` 操作来安装指定版本的 Node.js。（此示例使用版本 14。）
+# 这将 `node` 和 `npm` 命令放在你的 `PATH` 中。
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '14'
+
+# The `run` keyword tells the job to execute a command on the runner.
+# In this case, you are using `npm` to install the `bats` software testing package.
+# - - - - -
+# `run` 关键字告诉 Job 在 Runner 上执行一个命令。
+# 在这种情况下，你使用 `npm` 安装 `bats` 软件测试包。
+      - run: npm install -g bats
+
+# Finally, you'll run the `bats` command with a parameter that outputs the software version.
+# - - - - -
+# 最后，你将使用一个输出软件版本的参数运行 `bats` 命令。
+      - run: bats -v
