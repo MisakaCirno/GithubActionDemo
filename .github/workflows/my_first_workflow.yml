@@ -1,0 +1,27 @@
+name: Hello Github Action
+
+run-name: Here is run name!!! It's so cool!!!
+
+on: 
+    push:
+
+jobs: 
+    job_1_dev_name: 
+        name: Job 1 Display Name
+        runs-on: ubuntu-latest
+        steps: 
+            - name: Here is step 1
+              uses: actions/checkout@v4
+
+            - name: Here is step 2
+              run: echo Hello Github Action!!!
+
+    job_2_dev_name:
+        name: Job 2 Display Name
+        runs-on: ubuntu-latest
+        steps:
+            - name: Job 2 Step 1
+              run: echo Job 2 Step 1 is running!
+
+            - name: Job 2 Step 2
+              run: echo Job 2 Step 2 is running!
