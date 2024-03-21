@@ -45,3 +45,8 @@ jobs:
         run: |
           echo Add other actions to build,
           echo test, and deploy your project.
+
+      - name: Print Node.js Version
+        run: |
+          echo Node.js Version is:
+          node --version
