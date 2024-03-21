@@ -12,7 +12,6 @@ jobs:
         steps: 
             - name: Here is step 1
               uses: actions/checkout@v4
-              run: echo run and uses in single step test!
 
             - name: Here is step 2
               run: echo Hello Github Action!!!
