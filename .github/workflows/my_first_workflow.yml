@@ -1,15 +1,23 @@
+# 可选，不写就会用 yml 文件的名字显示在页面上
 name: Hello Github Action
 
+# 可选，执行的时候会显示这个名字
 run-name: Here is run name!!! It's so cool!!!
 
+# 在啥情况下运行
 on: 
     push:
+# 等价于 on: [push]
 
+# 有那些活要做
 jobs: 
+    # 这是一个 job
     job_1_dev_name: 
         name: Job 1 Display Name
         runs-on: ubuntu-latest
+        # 一个 job 里的每一个 step
         steps: 
+            # 要么用 uses，要么用 run，不能两个执行在一个 step 里
             - name: Here is step 1
               uses: actions/checkout@v4
 
